@@ -365,7 +365,20 @@ const PL = {
       }
     } else {
       try {
-        await navigator.clipboard.writeText(absoluteUrl);
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(absoluteUrl);
+        } else {
+          // Fallback for non-HTTPS environments
+          let textArea = document.createElement("textarea");
+          textArea.value = absoluteUrl;
+          textArea.style.position = "fixed"; // prevent scrolling
+          textArea.style.left = "-9999px";
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+        }
         this.showToast('<i class="bi bi-check-circle-fill me-2" style="color: #2ec4b6; font-size: 1.05rem; vertical-align: middle;"></i> Link copied to clipboard!');
       } catch (err) {
         console.error('Failed to copy text: ', err);
