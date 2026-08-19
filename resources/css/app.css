@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0e6b57;
+  --color-primary-dark: #061c16;
+  --color-secondary: #061c16;
+  --color-text-main: #061c16;
+  --color-text-muted: #4b5563;
+  --color-bg-light: #f5faf7;
+  --color-accent-gold: #ffc400;
+  
+  --font-sans: 'Inter', 'Outfit', sans-serif;
+  --font-serif: 'Outfit', 'Playfair Display', serif;
+}
+
+@layer components {
+    .btn-primary {
+        @apply bg-primary hover:bg-primary-dark text-white font-medium px-6 py-2 transition-colors duration-300;
+    }
+    .btn-secondary {
+        @apply bg-secondary hover:bg-black text-white font-medium px-6 py-2 transition-colors duration-300;
+    }
+}
