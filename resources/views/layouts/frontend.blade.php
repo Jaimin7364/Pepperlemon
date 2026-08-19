@@ -88,7 +88,7 @@
     <script>
       window.pl_csrf = '{{ csrf_token() }}';
     </script>
-    <script src="{{ asset('js/script.js?v=3') }}"></script>
+    <script src="{{ asset('js/script.js?v=' . filemtime(public_path('js/script.js'))) }}"></script>
     
     <!-- Quick View Modal -->
     <div id="quickview-modal" class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 opacity-0">
