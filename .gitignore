@@ -1,5 +1,5 @@
 # Laravel-specific directories and files
-/vendor/
+# /vendor/
 /node_modules/
 /public/hot/
 /public/storage
