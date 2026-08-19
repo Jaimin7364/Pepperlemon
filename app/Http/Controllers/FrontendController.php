@@ -176,4 +176,14 @@ class FrontendController extends Controller
     {
         return view('frontend.shipping');
     }
+
+    public function sitemap()
+    {
+        $products = Product::where('is_active', true)->get();
+        $categories = Category::where('is_active', true)->get();
+
+        return response()->view('frontend.sitemap', compact('products', 'categories'))
+                         ->header('Content-Type', 'text/xml');
+    }
 }
+

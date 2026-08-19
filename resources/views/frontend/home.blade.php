@@ -3,8 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pepperlemon | Home</title>
+<title>Pepperlemon - Premium Online Grocery & Beverage Shop</title>
+<meta name="description" content="Welcome to Pepperlemon, your premier destination for farm fresh groceries, premium beverages, candies, and gourmet snacks. Enjoy fast shipping and secure payments.">
+<meta name="keywords" content="pepperlemon, online grocery store, buy beverages online, organic food delivery, candies, snacks shop">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ url('/') }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ url('/') }}">
+<meta property="og:title" content="Pepperlemon - Premium Online Grocery & Beverage Shop">
+<meta property="og:description" content="Welcome to Pepperlemon, your premier destination for farm fresh groceries, premium beverages, candies, and gourmet snacks. Enjoy fast shipping and secure payments.">
+<meta property="og:image" content="{{ asset('images/logo.jpeg') }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ url('/') }}">
+<meta name="twitter:title" content="Pepperlemon - Premium Online Grocery & Beverage Shop">
+<meta name="twitter:description" content="Welcome to Pepperlemon, your premier destination for farm fresh groceries, premium beverages, candies, and gourmet snacks. Enjoy fast shipping and secure payments.">
+<meta name="twitter:image" content="{{ asset('images/logo.jpeg') }}">
 <link rel="icon" href="{{ asset('images/logo.jpeg') }}">
+
 <!-- Bootstrap -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">

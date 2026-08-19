@@ -109,3 +109,6 @@ Route::withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->post(
     '/webhook/stripe',
     [CheckoutController::class, 'stripeWebhook']
 )->name('webhook.stripe');
+
+Route::get('/sitemap.xml', [FrontendController::class, 'sitemap'])->name('sitemap');
+

@@ -5,7 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Pepperlemon - @yield('title', 'Ecommerce')</title>
+    <title>@yield('meta_title', 'Pepperlemon - Premium Online Grocery & Beverage Shop')</title>
+    <meta name="description" content="@yield('meta_description', 'Discover premium organic groceries, beverages, candies, and gourmet snacks at Pepperlemon. Enjoy fast express delivery and secure online checkout.')">
+    <meta name="keywords" content="@yield('meta_keywords', 'pepperlemon, online grocery store, organic food delivery, buy beverages online, gourmet snacks, candy store')">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('meta_title', 'Pepperlemon - Premium Online Grocery & Beverage Shop')">
+    <meta property="og:description" content="@yield('meta_description', 'Discover premium organic groceries, beverages, candies, and gourmet snacks at Pepperlemon. Enjoy fast express delivery and secure online checkout.')">
+    <meta property="og:image" content="@yield('meta_image', asset('images/logo.jpeg'))">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="{{ url()->current() }}">
+    <meta name="twitter:title" content="@yield('meta_title', 'Pepperlemon - Premium Online Grocery & Beverage Shop')">
+    <meta name="twitter:description" content="@yield('meta_description', 'Discover premium organic groceries, beverages, candies, and gourmet snacks at Pepperlemon. Enjoy fast express delivery and secure online checkout.')">
+    <meta name="twitter:image" content="@yield('meta_image', asset('images/logo.jpeg'))">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">

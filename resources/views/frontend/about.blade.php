@@ -1,6 +1,9 @@
-﻿@extends('layouts.frontend')
+@extends('layouts.frontend')
 
 @section('title', 'About Us')
+@section('meta_title', 'About Us | Pepperlemon - Fresh & Bold Flavors')
+@section('meta_description', 'Discover the story behind Pepperlemon. We offer farm fresh certified groceries, premium beverages, candies, and gourmet snacks delivered to your door.')
+@section('meta_keywords', 'about pepperlemon, organic food source, fresh groceries team, brand story, gourmet drinks')
 
 @section('content')
     <!-- Page Header -->

@@ -3,8 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pepperlemon | Product Detail</title>
+<title>{{ $product->name }} | Pepperlemon</title>
+<meta name="description" content="{{ $product->short_description ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 150) }}">
+<meta name="keywords" content="{{ $product->category->name ?? 'grocery' }}, {{ $product->name }}, buy {{ $product->name }} online, Pepperlemon">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="{{ route('product.show', $product->slug) }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="product">
+<meta property="og:url" content="{{ route('product.show', $product->slug) }}">
+<meta property="og:title" content="{{ $product->name }} | Pepperlemon">
+<meta property="og:description" content="{{ $product->short_description ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 150) }}">
+<meta property="og:image" content="{{ $product->primary_image_url }}">
+<meta property="product:price:amount" content="{{ $product->sale_price ?? $product->price }}">
+<meta property="product:price:currency" content="USD">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="{{ route('product.show', $product->slug) }}">
+<meta name="twitter:title" content="{{ $product->name }} | Pepperlemon">
+<meta name="twitter:description" content="{{ $product->short_description ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 150) }}">
+<meta name="twitter:image" content="{{ $product->primary_image_url }}">
 <link rel="icon" href="{{ asset('images/logo.jpeg') }}">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">

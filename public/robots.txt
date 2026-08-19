@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /cart/
+Disallow: /wishlist/
+Disallow: /webhook/
+
+Sitemap: https://pepperlemon.com/sitemap.xml
