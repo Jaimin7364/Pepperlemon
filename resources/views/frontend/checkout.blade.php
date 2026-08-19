@@ -222,39 +222,39 @@
                             @auth
                                 <!-- Document Uploads at add address time -->
                                 <div class="bg-slate-50 p-3.5 border border-slate-100 rounded-xl space-y-2.5 mt-2">
-                                    <h4 class="font-extrabold text-slate-800 text-[9px] uppercase tracking-wider pb-1.5 border-b border-slate-200/75 flex items-center gap-1">
-                                        <i class="fa-solid fa-shield-halved text-primary"></i> Verification Documents
-                                    </h4>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <div class="space-y-1">
-                                            <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-wider">Driving License *</label>
-                                            <div class="relative flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-xl bg-white p-3 hover:bg-gray-50/50 transition cursor-pointer">
-                                                <input type="file" name="driving_license" :required="deliveryType === 'online_delivery' && selectedAddressId === 'new'" accept=".pdf,.jpg,.jpeg,.png"
-                                                       class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                                                       onchange="document.getElementById('checkout-dl-file-name').innerText = this.files[0] ? this.files[0].name : 'Upload File'; document.getElementById('checkout-dl-icon').className = this.files[0] ? 'fa-solid fa-circle-check text-emerald-500 text-base mb-1' : 'fa-solid fa-cloud-arrow-up text-primary text-base mb-1';">
-                                                <div class="text-center pointer-events-none">
-                                                    <i class="fa-solid fa-cloud-arrow-up text-primary text-base mb-1" id="checkout-dl-icon"></i>
-                                                    <p class="text-[10px] font-bold text-gray-700 uppercase" id="checkout-dl-file-name">Upload File</p>
-                                                    <span class="text-[8px] text-gray-400 block mt-0.5">PDF, JPG, PNG up to 5MB</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                     <h4 class="font-extrabold text-slate-800 text-[9px] uppercase tracking-wider pb-1.5 border-b border-slate-200/75 flex items-center gap-1">
+                                         <i class="fa-solid fa-shield-halved text-primary"></i> Verification Documents (Optional)
+                                     </h4>
+                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                         <div class="space-y-1">
+                                             <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-wider">Driving License (Optional)</label>
+                                             <div class="relative flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-xl bg-white p-3 hover:bg-gray-50/50 transition cursor-pointer">
+                                                 <input type="file" name="driving_license" accept=".pdf,.jpg,.jpeg,.png"
+                                                        class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                                                        onchange="document.getElementById('checkout-dl-file-name').innerText = this.files[0] ? this.files[0].name : 'Upload File'; document.getElementById('checkout-dl-icon').className = this.files[0] ? 'fa-solid fa-circle-check text-emerald-500 text-base mb-1' : 'fa-solid fa-cloud-arrow-up text-primary text-base mb-1';">
+                                                 <div class="text-center pointer-events-none">
+                                                     <i class="fa-solid fa-cloud-arrow-up text-primary text-base mb-1" id="checkout-dl-icon"></i>
+                                                     <p class="text-[10px] font-bold text-gray-700 uppercase" id="checkout-dl-file-name">Upload File</p>
+                                                     <span class="text-[8px] text-gray-400 block mt-0.5">PDF, JPG, PNG up to 5MB</span>
+                                                 </div>
+                                             </div>
+                                         </div>
 
-                                        <div class="space-y-1">
-                                            <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-wider">Sales Tax Permit *</label>
-                                            <div class="relative flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-xl bg-white p-3 hover:bg-gray-50/50 transition cursor-pointer">
-                                                <input type="file" name="sales_tax_permit" :required="deliveryType === 'online_delivery' && selectedAddressId === 'new'" accept=".pdf,.jpg,.jpeg,.png"
-                                                       class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                                                       onchange="document.getElementById('checkout-st-file-name').innerText = this.files[0] ? this.files[0].name : 'Upload File'; document.getElementById('checkout-st-icon').className = this.files[0] ? 'fa-solid fa-circle-check text-emerald-500 text-base mb-1' : 'fa-solid fa-cloud-arrow-up text-primary text-base mb-1';">
-                                                <div class="text-center pointer-events-none">
-                                                    <i class="fa-solid fa-cloud-arrow-up text-primary text-base mb-1" id="checkout-st-icon"></i>
-                                                    <p class="text-[10px] font-bold text-gray-700 uppercase" id="checkout-st-file-name">Upload File</p>
-                                                    <span class="text-[8px] text-gray-400 block mt-0.5">PDF, JPG, PNG up to 5MB</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                         <div class="space-y-1">
+                                             <label class="block text-[9px] font-bold text-gray-500 uppercase tracking-wider">Sales Tax Permit (Optional)</label>
+                                             <div class="relative flex flex-col items-center justify-center border border-dashed border-gray-300 rounded-xl bg-white p-3 hover:bg-gray-50/50 transition cursor-pointer">
+                                                 <input type="file" name="sales_tax_permit" accept=".pdf,.jpg,.jpeg,.png"
+                                                        class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
+                                                        onchange="document.getElementById('checkout-st-file-name').innerText = this.files[0] ? this.files[0].name : 'Upload File'; document.getElementById('checkout-st-icon').className = this.files[0] ? 'fa-solid fa-circle-check text-emerald-500 text-base mb-1' : 'fa-solid fa-cloud-arrow-up text-primary text-base mb-1';">
+                                                 <div class="text-center pointer-events-none">
+                                                     <i class="fa-solid fa-cloud-arrow-up text-primary text-base mb-1" id="checkout-st-icon"></i>
+                                                     <p class="text-[10px] font-bold text-gray-700 uppercase" id="checkout-st-file-name">Upload File</p>
+                                                     <span class="text-[8px] text-gray-400 block mt-0.5">PDF, JPG, PNG up to 5MB</span>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
 
                                 <!-- Set default checkbox -->
                                 <div class="flex items-center gap-2 pt-1">
@@ -289,7 +289,7 @@
                         <label class="flex items-center p-2.5 border border-gray-200 bg-white rounded-xl cursor-pointer hover:bg-primary/5 hover:border-primary/30 transition shadow-sm relative">
                             <input type="radio" name="payment_method" value="stripe" class="h-4 w-4 text-primary focus:ring-primary border-gray-300 cursor-pointer">
                             <div class="ml-2.5 flex-1">
-                                <span class="font-bold text-gray-900 text-xs block">Pay with Card</span>
+                                <span class="font-bold text-gray-900 text-xs block">Credit / Debit Card Payment</span>
                                 <span class="text-[10px] text-gray-400">Visa, Mastercard, Amex &amp; more</span>
                             </div>
                             <div class="ms-auto flex items-center gap-1">

@@ -44,17 +44,47 @@ class CustomerOrderController extends Controller
         }
 
         $request->validate([
+            'return_type'     => 'required|string|in:return,replace',
             'return_reason'   => 'required|string|max:255',
             'return_comments' => 'required|string|max:1000',
         ]);
 
         $order->update([
             'status'          => 'processing', // Keep as processing or special state
+            'return_type'     => $request->return_type,
             'return_reason'   => $request->return_reason,
             'return_comments' => $request->return_comments,
             'return_status'   => 'pending', // Pending admin approval
         ]);
 
         return redirect()->back()->with('success', 'Your return request has been submitted successfully. Admin will review it shortly.');
+    }
+
+    // Cancel order
+    public function cancelOrder(Request $request, Order $order)
+    {
+        // Ensure order belongs to logged in user
+        if ($order->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        // Only allow cancellation if status is pending
+        if ($order->status !== 'pending') {
+            return redirect()->back()->with('error', 'Only pending orders can be cancelled.');
+        }
+
+        // Restock products
+        foreach ($order->items as $item) {
+            if ($item->product) {
+                $item->product->increment('quantity', $item->quantity);
+            }
+        }
+
+        $order->update([
+            'status' => 'cancelled',
+            'notes' => $order->notes ? $order->notes . "\nCancelled by customer." : 'Cancelled by customer.',
+        ]);
+
+        return redirect()->back()->with('success', 'Your order has been cancelled successfully.');
     }
 }

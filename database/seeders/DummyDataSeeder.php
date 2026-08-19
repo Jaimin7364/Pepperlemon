@@ -89,5 +89,34 @@ class DummyDataSeeder extends Seeder
                 ]
             );
         }
+
+        // Seed default banners if banners table is empty
+        if (\App\Models\Banner::count() === 0) {
+            \App\Models\Banner::create([
+                'title' => 'Fresh Organic Groceries',
+                'subtitle' => 'Farm Fresh Produce',
+                'image_path' => 'images/hero_banner_new.png',
+                'link' => '/shop',
+                'type' => 'hero',
+                'is_active' => true,
+            ]);
+            \App\Models\Banner::create([
+                'title' => 'Premium Beverages',
+                'subtitle' => 'Refreshing Taste',
+                'image_path' => 'images/banner2_new.png',
+                'link' => '/shop?cat=beverage',
+                'type' => 'hero',
+                'is_active' => true,
+            ]);
+            \App\Models\Banner::create([
+                'title' => 'Gourmet Snacks',
+                'subtitle' => 'Crunchy Delights',
+                'image_path' => 'images/banner3_new.png',
+                'link' => '/shop?cat=snacks',
+                'type' => 'hero',
+                'is_active' => true,
+            ]);
+        }
     }
 }
+

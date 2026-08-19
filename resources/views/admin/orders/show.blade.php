@@ -155,16 +155,20 @@
                     <!-- Return Request Processing (Only shown if return has been requested) -->
                     @if($order->return_status !== null)
                         <div class="space-y-1.5 pt-3 border-t border-slate-150">
-                            <label class="text-xs font-bold text-red-600 uppercase tracking-wider block">B2B Return Request Status</label>
+                            <label class="text-xs font-bold text-red-600 uppercase tracking-wider block">B2B Return/Replace Request Status</label>
                             <select name="return_status" class="w-full border border-red-200 focus:ring-1 focus:ring-red-500 focus:border-red-500 rounded-xl text-sm px-4 py-2.5 bg-white font-bold text-red-700">
                                 <option value="pending" @selected($order->return_status === 'pending')>Pending Review</option>
-                                <option value="approved" @selected($order->return_status === 'approved')>Approve Return</option>
-                                <option value="rejected" @selected($order->return_status === 'rejected')>Reject Return</option>
+                                <option value="approved" @selected($order->return_status === 'approved')>Approve Request</option>
+                                <option value="rejected" @selected($order->return_status === 'rejected')>Reject Request</option>
                             </select>
                             
                             <div class="bg-red-50/30 border border-red-150 rounded-xl p-3.5 mt-2 space-y-2 text-xs">
                                 <div>
-                                    <span class="block text-[9px] uppercase font-bold text-red-500">Return Reason</span>
+                                    <span class="block text-[9px] uppercase font-bold text-red-500">Request Type</span>
+                                    <span class="block font-semibold text-slate-800 mt-0.5">{{ ucfirst($order->return_type ?? 'Return') }}</span>
+                                </div>
+                                <div>
+                                    <span class="block text-[9px] uppercase font-bold text-red-500">Reason</span>
                                     <span class="block font-semibold text-slate-800 mt-0.5">{{ $order->return_reason }}</span>
                                 </div>
                                 <div>

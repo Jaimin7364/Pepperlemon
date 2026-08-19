@@ -173,18 +173,18 @@
                         <!-- Document Uploads -->
                         <div class="bg-slate-50 p-4 border border-slate-100 rounded-xl space-y-3.5">
                             <h4 class="font-extrabold text-slate-800 text-[10px] uppercase tracking-wider pb-1.5 border-b border-slate-200/75 flex items-center gap-1">
-                                <i class="fa-solid fa-shield-halved text-primary"></i> Verification Documents
+                                <i class="fa-solid fa-shield-halved text-primary"></i> Verification Documents (Optional)
                             </h4>
-                            <p class="text-[10px] text-slate-450 leading-relaxed font-semibold">
-                                As a registered B2B platform, we require active commercial entity validation. Please upload readable documents.
+                            <p class="text-[10px] text-slate-455 leading-relaxed font-semibold">
+                                As a registered B2B platform, you can upload commercial validation documents if available.
                             </p>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                                 <!-- Driving License -->
                                 <div class="space-y-1">
-                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Driving License (Image or PDF) *</label>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Driving License (Image or PDF) (Optional)</label>
                                     <div class="relative flex flex-col items-center justify-center border border-dashed border-slate-300 rounded-xl bg-white p-3.5 hover:bg-slate-50/50 transition cursor-pointer">
-                                        <input type="file" name="driving_license" required accept=".pdf,.jpg,.jpeg,.png"
+                                        <input type="file" name="driving_license" accept=".pdf,.jpg,.jpeg,.png"
                                                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                                                onchange="document.getElementById('dash-dl-file-name').innerText = this.files[0] ? this.files[0].name : 'Upload File'; document.getElementById('dash-dl-icon').className = this.files[0] ? 'fa-solid fa-circle-check text-emerald-500 text-base mb-1' : 'fa-solid fa-cloud-arrow-up text-primary text-base mb-1';">
                                         <div class="text-center pointer-events-none">
@@ -197,9 +197,9 @@
 
                                 <!-- Sales Tax Permit -->
                                 <div class="space-y-1">
-                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Sales Tax Permit (Image or PDF) *</label>
+                                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">Sales Tax Permit (Image or PDF) (Optional)</label>
                                     <div class="relative flex flex-col items-center justify-center border border-dashed border-slate-300 rounded-xl bg-white p-3.5 hover:bg-slate-50/50 transition cursor-pointer">
-                                        <input type="file" name="sales_tax_permit" required accept=".pdf,.jpg,.jpeg,.png"
+                                        <input type="file" name="sales_tax_permit" accept=".pdf,.jpg,.jpeg,.png"
                                                class="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
                                                onchange="document.getElementById('dash-st-file-name').innerText = this.files[0] ? this.files[0].name : 'Upload File'; document.getElementById('dash-st-icon').className = this.files[0] ? 'fa-solid fa-circle-check text-emerald-500 text-base mb-1' : 'fa-solid fa-cloud-arrow-up text-primary text-base mb-1';">
                                         <div class="text-center pointer-events-none">
@@ -212,7 +212,6 @@
                             </div>
                         </div>
 
-                        <!-- Default checkbox toggle -->
                         <div class="flex items-center gap-2">
                             <input type="checkbox" name="is_default" id="is_default" value="1" {{ old('is_default') ? 'checked' : '' }}
                                    class="rounded border-slate-300 text-primary focus:ring-primary/25 h-3.5 w-3.5 cursor-pointer">

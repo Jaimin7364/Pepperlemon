@@ -22,8 +22,8 @@ class AddressController extends Controller
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'zip' => 'required|string|max:20',
-            'driving_license' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB
-            'sales_tax_permit' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB
+            'driving_license' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB
+            'sales_tax_permit' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120', // Max 5MB
         ]);
 
         $drivingLicensePath = null;

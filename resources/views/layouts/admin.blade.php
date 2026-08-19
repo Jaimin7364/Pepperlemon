@@ -97,13 +97,18 @@
                     <span>Customers</span>
                 </a>
 
-                {{-- 
+                <a href="{{ route('admin.banners.index') }}" 
+                   class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all {{ request()->routeIs('admin.banners.*') ? 'bg-[#C49A6C] text-white shadow-lg shadow-[#C49A6C]/25' : 'hover:bg-slate-800 hover:text-white' }}">
+                    <i class="fa-solid fa-images w-5 text-center"></i>
+                    <span>Banners</span>
+                </a>
+
+
                 <a href="{{ route('admin.coupons.index') }}" 
                    class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all {{ request()->routeIs('admin.coupons.*') ? 'bg-[#C49A6C] text-white shadow-lg shadow-[#C49A6C]/25' : 'hover:bg-slate-800 hover:text-white' }}">
                     <i class="fa-solid fa-tag w-5 text-center"></i>
                     <span>Coupons</span>
                 </a>
-                --}}
 
                 <a href="{{ route('admin.settings.edit') }}" 
                    class="flex items-center space-x-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all {{ request()->routeIs('admin.settings.*') ? 'bg-[#C49A6C] text-white shadow-lg shadow-[#C49A6C]/25' : 'hover:bg-slate-800 hover:text-white' }}">

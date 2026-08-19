@@ -40,7 +40,7 @@
   <a href="{{ url('/shop') }}" class="pl-back-btn"><i class="bi bi-arrow-left"></i></a>
   <h1 id="mobile-product-title">{{ $product->name }}</h1>
   <div class="pl-header-icons">
-    <a href="#" class="pl-icon-btn" style="width:34px;height:34px;"><i class="bi bi-share"></i></a>
+    <button class="pl-icon-btn btn p-0 border-0 bg-transparent flex-shrink-0" onclick="PL.shareProduct('{{ addslashes($product->name) }}', '{{ route('product.show', $product->slug) }}')" title="Share Product" style="width:34px;height:34px;color: inherit; display: flex; align-items: center; justify-content: center;"><i class="bi bi-share"></i></button>
   </div>
 </header>
 
@@ -79,9 +79,14 @@
 
     <div class="col-lg-7">
       <span class="badge rounded-pill mb-2" id="pl-product-badge" style="background:var(--pl-primary-light);color:var(--pl-primary-dark);">{{ $product->category->name ?? 'Details' }}</span>
-      <h1 class="fs-4 fw-bold" id="pl-product-title" style="font-family:var(--pl-font-head);">
-        {{ $product->name }}
-      </h1>
+      <div class="d-flex align-items-start justify-content-between gap-3 mb-2">
+        <h1 class="fs-4 fw-bold" id="pl-product-title" style="font-family:var(--pl-font-head); margin-bottom: 0; line-height: 1.2;">
+          {{ $product->name }}
+        </h1>
+        <button class="btn d-none d-lg-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 38px; height: 38px; border-radius: 50%; border: 1px solid #e2e8f0; background: #fff; color: #475569; transition: all 0.2s; cursor: pointer;" onclick="PL.shareProduct('{{ addslashes($product->name) }}', '{{ route('product.show', $product->slug) }}')" title="Share Product" onmouseover="this.style.background='#f8fafc'; this.style.color='#0f172a';" onmouseout="this.style.background='#fff'; this.style.color='#475569';">
+          <i class="bi bi-share"></i>
+        </button>
+      </div>
       <div class="d-flex align-items-center gap-2 mb-3">
         @php
           $rating = 4.0 + (($product->id * 3) % 11) / 10.0;

@@ -261,6 +261,19 @@
                                             </div>
                                         </div>
 
+                                        <!-- Cancel Order Section -->
+                                        @if($order->status === 'pending')
+                                            <div class="mt-4 pt-3.5 border-t border-slate-150">
+                                                <form action="{{ route('orders.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? This action cannot be undone.');">
+                                                    @csrf
+                                                    <button type="submit" class="inline-flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                                                        <i class="fa-solid fa-ban"></i>
+                                                        <span>Cancel Order</span>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endif
+
                                         <!-- Return Order B2B Request Section -->
                                         @if($order->status === 'completed' && $order->return_status === null)
                                             <div class="mt-4 pt-3.5 border-t border-slate-150">
@@ -273,6 +286,14 @@
 
                                                     <form x-show="showReturnForm" @click.stop="" action="{{ route('orders.return', $order->id) }}" method="POST" class="mt-3 bg-red-50/20 border border-red-150 rounded-xl p-3.5 space-y-3">
                                                         @csrf
+                                                        <div>
+                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Request Type <span class="text-red-500">*</span></label>
+                                                            <select name="return_type" required class="w-full border border-slate-200 focus:ring-1 focus:ring-red-500 focus:border-red-500 rounded-lg text-xs px-3 py-2 bg-white">
+                                                                <option value="">Select an option</option>
+                                                                <option value="return">Return for Refund</option>
+                                                                <option value="replace">Replace Product</option>
+                                                            </select>
+                                                        </div>
                                                         <div>
                                                             <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Reason for Return <span class="text-red-500">*</span></label>
                                                             <select name="return_reason" required class="w-full border border-slate-200 focus:ring-1 focus:ring-red-500 focus:border-red-500 rounded-lg text-xs px-3 py-2 bg-white">
@@ -301,13 +322,17 @@
                                         @if($order->return_status !== null)
                                             <div class="mt-4 pt-3.5 border-t border-slate-150 bg-slate-50/50 p-3 rounded-xl border border-slate-150">
                                                 <h6 class="text-[10px] font-extrabold text-slate-655 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                                                    <i class="fa-solid fa-arrow-rotate-left text-red-500"></i> Return Request Details
+                                                    <i class="fa-solid fa-arrow-rotate-left text-red-500"></i> {{ ucfirst($order->return_type ?? 'Return') }} Request Details
                                                 </h6>
                                                 <div class="text-[10px] text-slate-700 space-y-1.5">
                                                     <div class="flex justify-between">
-                                                        <span class="text-slate-550 font-medium">Return Status</span>
+                                                        <span class="text-slate-550 font-medium">Request Type</span>
+                                                        <span class="font-extrabold text-slate-850">{{ ucfirst($order->return_type ?? 'Return') }}</span>
+                                                    </div>
+                                                    <div class="flex justify-between">
+                                                        <span class="text-slate-550 font-medium">Status</span>
                                                         <span class="font-extrabold text-[9px] uppercase px-2 py-0.5 rounded-full {{ $order->return_status === 'approved' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : ($order->return_status === 'rejected' ? 'bg-rose-50 text-rose-800 border border-rose-200' : 'bg-amber-50 text-amber-800 border border-amber-200') }}">
-                                                            Return {{ ucfirst($order->return_status) }}
+                                                            {{ ucfirst($order->return_status) }}
                                                         </span>
                                                     </div>
                                                     <div class="flex justify-between">

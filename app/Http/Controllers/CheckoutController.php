@@ -104,8 +104,8 @@ class CheckoutController extends Controller
                 ];
 
                 if (auth()->check()) {
-                    $rules['driving_license'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
-                    $rules['sales_tax_permit'] = 'required|file|mimes:pdf,jpg,jpeg,png|max:5120';
+                    $rules['driving_license'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120';
+                    $rules['sales_tax_permit'] = 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120';
                 }
 
                 $addressValidated = $request->validate($rules);

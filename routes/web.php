@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Admin\CouponController as AdminCouponController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\BannerController as AdminBannerController;
+
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about');
@@ -50,6 +52,7 @@ Route::middleware('auth')->group(function () {
     // Customer Orders & Returns
     Route::get('/orders', [CustomerOrderController::class, 'index'])->name('orders.index');
     Route::post('/orders/{order}/return', [CustomerOrderController::class, 'requestReturn'])->name('orders.return');
+    Route::post('/orders/{order}/cancel', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
 });
 
 Route::post('/wishlist/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
@@ -73,6 +76,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
     Route::patch('/addresses/{address}/default', [AddressController::class, 'setDefault'])->name('addresses.setDefault');
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+    // Payment Methods
+    Route::get('/payment-methods', [\App\Http\Controllers\PaymentMethodController::class, 'index'])->name('payment-methods.index');
+    Route::post('/payment-methods', [\App\Http\Controllers\PaymentMethodController::class, 'store'])->name('payment-methods.store');
+    Route::delete('/payment-methods/{paymentMethod}', [\App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
 });
 
 Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('auth.google');
@@ -86,6 +94,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::resource('categories', AdminCategoryController::class);
     Route::resource('testimonials', AdminTestimonialController::class);
     Route::resource('coupons', AdminCouponController::class);
+    Route::resource('banners', AdminBannerController::class);
     
     // Orders
     Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');

@@ -348,6 +348,33 @@ const PL = {
     });
   },
 
+  /* ---- Web Share API with Clipboard Fallback ---- */
+  async shareProduct(name, url) {
+    const absoluteUrl = url.startsWith('http') ? url : window.location.origin + url;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: name + ' | Pepperlemon',
+          text: `Check out ${name} on Pepperlemon!`,
+          url: absoluteUrl
+        });
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error sharing:', err);
+        }
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(absoluteUrl);
+        this.showToast('<i class="bi bi-check-circle-fill me-2" style="color: #2ec4b6; font-size: 1.05rem; vertical-align: middle;"></i> Link copied to clipboard!');
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+        this.showToast('Failed to copy link.');
+      }
+    }
+  },
+
+
   init(){
     this.initScrollArrows();
     this.initSearchAndFilters();
