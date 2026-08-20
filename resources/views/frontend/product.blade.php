@@ -9,6 +9,9 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{{ route('product.show', $product->slug) }}">
 
+<!-- PWA Meta Tags -->
+@include('frontend.partials.pwa_head')
+
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="product">
 <meta property="og:url" content="{{ route('product.show', $product->slug) }}">
@@ -289,7 +292,7 @@
 </main>
 
 @include('frontend.partials.footer')
-@include('frontend.partials.mobile_nav')
+@include('frontend.partials.bottom_nav')
 
 <!-- Mobile Sticky Add-to-Cart Bar -->
 <div class="pl-mobile-sticky-bar d-lg-none" id="plMobileStickyBar">
@@ -372,6 +375,9 @@
     }
   });
 </script>
+
+<!-- PWA Installation Banners and Scripts -->
+@include('frontend.partials.pwa_script')
 
 </body>
 </html>

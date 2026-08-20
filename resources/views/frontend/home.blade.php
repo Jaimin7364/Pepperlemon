@@ -9,6 +9,9 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{{ url('/') }}">
 
+<!-- PWA Meta Tags -->
+@include('frontend.partials.pwa_head')
+
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ url('/') }}">
@@ -344,7 +347,8 @@
 
 <!-- ===================== FOOTER (DESKTOP) ===================== -->
 @include('frontend.partials.footer')
-@include('frontend.partials.mobile_nav')
+@include('frontend.partials.bottom_nav')
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -428,6 +432,9 @@
     }
   });
 </script>
+
+<!-- PWA Installation Banners and Scripts -->
+@include('frontend.partials.pwa_script')
 
 </body>
 </html>
