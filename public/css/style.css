@@ -120,8 +120,12 @@ a{text-decoration:none;}
 .pl-navbar .pl-brand-text{
   font-family:var(--pl-font-head);font-weight:700;font-size:1.25rem;color:var(--pl-primary-dark);
   line-height:1.1;
+  white-space: nowrap;
 }
-.pl-navbar .pl-brand-tag{font-size:.65rem;color:var(--pl-muted);letter-spacing:.06em;text-transform:uppercase;}
+.pl-navbar .pl-brand-tag{
+  font-size:.65rem;color:var(--pl-muted);letter-spacing:.06em;text-transform:uppercase;
+  white-space: nowrap;
+}
 .pl-navbar .nav-link{
   color:var(--pl-ink);
   font-weight:600;

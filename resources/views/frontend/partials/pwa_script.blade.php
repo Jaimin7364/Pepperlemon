@@ -1,25 +1,25 @@
 <!-- Android Install Banner -->
-<div id="android-install-banner" class="hidden">
-    <div class="flex items-center gap-3">
-        <img src="{{ asset('images/icons/icon-192x192.png') }}" class="w-10 h-10 rounded-lg shadow-sm">
+<div id="android-install-banner" class="position-fixed bottom-0 start-0 w-100 bg-white border-top shadow-lg" style="display: none; z-index: 9999; padding: 15px;">
+    <div class="d-flex align-items-center gap-3">
+        <img src="{{ asset('images/icons/icon-192x192.png') }}" class="rounded shadow-sm" style="width: 40px; height: 40px;">
         <div>
-            <span class="block text-sm font-bold text-gray-900 leading-tight">Pepperlemon App</span>
-            <span class="block text-[10px] text-gray-500 font-semibold">Fast, easy, & offline-ready</span>
+            <span class="d-block fw-bold text-dark" style="font-size: 0.875rem; line-height: 1.25;">Pepperlemon App</span>
+            <span class="d-block fw-semibold text-secondary" style="font-size: 0.65rem;">Fast, easy, & offline-ready</span>
         </div>
     </div>
-    <div class="flex gap-2">
-        <button id="android-install-dismiss" class="text-xs text-gray-400 font-bold px-2 py-2">Later</button>
-        <button id="android-install-btn" class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm">Install</button>
+    <div class="d-flex gap-2">
+        <button id="android-install-dismiss" class="btn btn-link text-secondary fw-bold text-decoration-none p-2" style="font-size: 0.75rem;">Later</button>
+        <button id="android-install-btn" class="btn btn-pl-primary fw-bold px-3 py-2 shadow-sm" style="font-size: 0.75rem; border-radius: 8px;">Install</button>
     </div>
 </div>
 
 <!-- iOS Install Banner -->
-<div id="ios-install-banner">
-    <div class="close-btn" onclick="document.getElementById('ios-install-banner').style.display='none'"><i class="fa-solid fa-xmark"></i></div>
-    <div class="flex items-center gap-3">
-        <img src="{{ asset('images/icons/icon-192x192.png') }}" class="w-10 h-10 rounded-lg shadow-sm">
-        <div class="leading-tight text-gray-700">
-            Install <b>Pepperlemon</b> on your iPhone: tap <i class="fa-solid fa-arrow-up-from-bracket mx-1 text-blue-500 text-sm"></i> and then <b>Add to Home Screen</b> <i class="fa-regular fa-square-plus mx-1"></i>
+<div id="ios-install-banner" class="position-fixed bg-white border shadow-lg rounded-4" style="display: none; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; width: 90%; max-width: 380px; padding: 12px 16px;">
+    <div class="close-btn position-absolute bg-danger text-white rounded-circle d-flex align-items-center justify-content-center" style="top: -10px; right: -10px; width: 24px; height: 24px; cursor: pointer; font-size: 14px;" onclick="document.getElementById('ios-install-banner').style.display='none'"><i class="bi bi-x"></i></div>
+    <div class="d-flex align-items-center gap-3">
+        <img src="{{ asset('images/icons/icon-192x192.png') }}" class="rounded shadow-sm" style="width: 40px; height: 40px;">
+        <div class="text-secondary" style="line-height: 1.25; font-size: 0.75rem;">
+            Install <b>Pepperlemon</b> on your iPhone: tap <i class="bi bi-box-arrow-up mx-1 text-primary"></i> and then <b>Add to Home Screen</b> <i class="bi bi-plus-square mx-1"></i>
         </div>
     </div>
 </div>
@@ -86,7 +86,6 @@
             
             if(!localStorage.getItem('androidInstallDismissed')) {
                 androidBanner.style.display = 'flex';
-                androidBanner.classList.remove('hidden');
             }
         });
 
