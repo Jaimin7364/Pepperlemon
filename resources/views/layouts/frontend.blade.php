@@ -251,7 +251,12 @@
         }
         
         // Detect if already installed (standalone mode)
-        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+        const isInStandaloneMode = () => {
+            return ('standalone' in window.navigator && window.navigator.standalone) || 
+                   window.matchMedia('(display-mode: standalone)').matches || 
+                   window.matchMedia('(display-mode: fullscreen)').matches ||
+                   window.matchMedia('(display-mode: minimal-ui)').matches;
+        };
 
         if (isIos() && !isInStandaloneMode()) {
             // Show iOS hint after 2 seconds if not dismissed previously
@@ -265,12 +270,23 @@
         // Handle Android install prompt
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
+            
+            // Don't show if already in standalone mode
+            if (isInStandaloneMode()) return;
+            
             deferredPrompt = e;
             
             if(!localStorage.getItem('androidInstallDismissed')) {
                 androidBanner.style.display = 'flex';
                 androidBanner.classList.remove('hidden');
             }
+        });
+
+        // Hide banner immediately when installation is complete
+        window.addEventListener('appinstalled', () => {
+            androidBanner.style.display = 'none';
+            deferredPrompt = null;
+            console.log('App successfully installed');
         });
 
         androidInstallBtn.addEventListener('click', async () => {
