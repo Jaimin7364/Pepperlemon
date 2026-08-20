@@ -152,6 +152,16 @@
                         </div>
                     @endif
 
+                    <!-- Refund Details (if any) -->
+                    @if(!empty($order->refund_account_details))
+                        <div class="space-y-1.5 pt-3 border-t border-slate-150">
+                            <label class="text-xs font-bold text-rose-600 uppercase tracking-wider block">Customer Refund Details</label>
+                            <div class="bg-rose-50 border border-rose-200 rounded-xl p-3 text-sm text-slate-800 whitespace-pre-wrap font-medium">
+                                {{ $order->refund_account_details }}
+                            </div>
+                        </div>
+                    @endif
+
                     <!-- Return Request Processing (Only shown if return has been requested) -->
                     @if($order->return_status !== null)
                         <div class="space-y-1.5 pt-3 border-t border-slate-150">

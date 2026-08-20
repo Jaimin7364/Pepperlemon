@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#0e6b57">
+    <link rel="apple-touch-icon" href="{{ asset('images/icons/icon-192x192.png') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Pepperlemon">
+
     <title>@yield('meta_title', 'Pepperlemon - Premium Online Grocery & Beverage Shop')</title>
     <meta name="description" content="@yield('meta_description', 'Discover premium organic groceries, beverages, candies, and gourmet snacks at Pepperlemon. Enjoy fast express delivery and secure online checkout.')">
     <meta name="keywords" content="@yield('meta_keywords', 'pepperlemon, online grocery store, organic food delivery, buy beverages online, gourmet snacks, candy store')">
@@ -41,6 +49,56 @@
     <style>
         body { font-family: 'Inter', sans-serif; color: #000000; }
         a { text-decoration: none; }
+        
+        /* App-like CSS */
+        html, body { overscroll-behavior-y: none; }
+        * { -webkit-tap-highlight-color: transparent; }
+        .app-no-select { user-select: none; -webkit-user-select: none; }
+        
+        /* Custom Install Banner for iOS */
+        #ios-install-banner {
+            display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #fff; padding: 12px 16px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 9999; border: 1px solid #e2e8f0; width: 90%; max-width: 350px; font-size: 12px; font-family: 'Outfit', sans-serif; font-weight: 600;
+        }
+        #ios-install-banner .close-btn {
+            position: absolute; top: -8px; right: -8px; background: #ef4444; color: #fff; border-radius: 50%;
+            width: 20px; height: 20px; text-align: center; line-height: 20px; cursor: pointer; font-size: 10px;
+        }
+
+        /* Custom Install Banner for Android */
+        #android-install-banner {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e2e8f0;
+            padding: 15px; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); z-index: 9999; display: flex; justify-content: space-between; align-items: center;
+        }
+
+        /* Bottom Navigation Bar CSS */
+        .pl-bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff;
+            border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; align-items: center;
+            padding: 8px 0 12px 0; z-index: 1030; box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+            padding-bottom: env(safe-area-inset-bottom, 12px); /* For iOS home indicator */
+        }
+        .pl-bottom-nav .nav-item {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #64748b; font-size: 10px; font-weight: 600; text-decoration: none; width: 25%;
+            transition: color 0.2s ease;
+        }
+        .pl-bottom-nav .nav-item i {
+            font-size: 20px; margin-bottom: 2px;
+        }
+        .pl-bottom-nav .nav-item.active {
+            color: var(--pl-primary);
+        }
+        .pl-nav-badge {
+            font-size: 9px !important; padding: 2px 4px !important; top: 2px !important; right: 10px !important;
+        }
+        
+        /* Adjust main body padding for mobile bottom nav */
+        @media (max-width: 991px) {
+            body { padding-bottom: 70px; }
+            .pl-hide-on-product .pl-bottom-nav { display: none !important; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-black bg-white" x-data="{ mobileMenuOpen: false }">
@@ -135,6 +193,102 @@
         <span id="toast-message" class="text-xs font-medium"></span>
     </div>
 
+    <!-- Android Install Banner -->
+    <div id="android-install-banner" class="hidden">
+        <div class="flex items-center gap-3">
+            <img src="{{ asset('images/icons/icon-192x192.png') }}" class="w-10 h-10 rounded-lg shadow-sm">
+            <div>
+                <span class="block text-sm font-bold text-gray-900 leading-tight">Pepperlemon App</span>
+                <span class="block text-[10px] text-gray-500 font-semibold">Fast, easy, & offline-ready</span>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <button id="android-install-dismiss" class="text-xs text-gray-400 font-bold px-2 py-2">Later</button>
+            <button id="android-install-btn" class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-lg shadow-sm">Install</button>
+        </div>
+    </div>
+
+    <!-- iOS Install Banner -->
+    <div id="ios-install-banner">
+        <div class="close-btn" onclick="document.getElementById('ios-install-banner').style.display='none'"><i class="fa-solid fa-xmark"></i></div>
+        <div class="flex items-center gap-3">
+            <img src="{{ asset('images/icons/icon-192x192.png') }}" class="w-10 h-10 rounded-lg shadow-sm">
+            <div class="leading-tight text-gray-700">
+                Install <b>Pepperlemon</b> on your iPhone: tap <i class="fa-solid fa-arrow-up-from-bracket mx-1 text-blue-500 text-sm"></i> and then <b>Add to Home Screen</b> <i class="fa-regular fa-square-plus mx-1"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bottom Navigation -->
+    @include('frontend.partials.bottom_nav')
+
     @stack('scripts')
+    
+    <!-- PWA Registration & Install Logic -->
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then((registration) => {
+                    console.log('SW registered: ', registration);
+                }).catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
+        }
+
+        // Install Prompt Logic
+        let deferredPrompt;
+        const androidBanner = document.getElementById('android-install-banner');
+        const androidInstallBtn = document.getElementById('android-install-btn');
+        const androidDismissBtn = document.getElementById('android-install-dismiss');
+        const iosBanner = document.getElementById('ios-install-banner');
+
+        // Detect iOS Safari
+        const isIos = () => {
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            return /iphone|ipad|ipod/.test(userAgent);
+        }
+        
+        // Detect if already installed (standalone mode)
+        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+        if (isIos() && !isInStandaloneMode()) {
+            // Show iOS hint after 2 seconds if not dismissed previously
+            if(!localStorage.getItem('iosInstallDismissed')) {
+                setTimeout(() => {
+                    iosBanner.style.display = 'block';
+                }, 2000);
+            }
+        }
+
+        // Handle Android install prompt
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            if(!localStorage.getItem('androidInstallDismissed')) {
+                androidBanner.style.display = 'flex';
+                androidBanner.classList.remove('hidden');
+            }
+        });
+
+        androidInstallBtn.addEventListener('click', async () => {
+            androidBanner.style.display = 'none';
+            if(deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the A2HS prompt');
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        androidDismissBtn.addEventListener('click', () => {
+            androidBanner.style.display = 'none';
+            localStorage.setItem('androidInstallDismissed', 'true');
+        });
+    </script>
 </body>
 </html>

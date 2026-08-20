@@ -264,20 +264,31 @@
                                         <!-- Cancel Order Section -->
                                         @if($order->status === 'pending')
                                             <div class="mt-4 pt-3.5 border-t border-slate-150">
-                                                <form action="{{ route('orders.cancel', $order->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to cancel this order? This action cannot be undone.');">
-                                                    @csrf
-                                                    <button type="submit" class="inline-flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                                                <div x-data="{ showCancelForm: false }">
+                                                    <button type="button" @click="showCancelForm = !showCancelForm" class="inline-flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer">
                                                         <i class="fa-solid fa-ban"></i>
                                                         <span>Cancel Order</span>
                                                     </button>
-                                                </form>
+
+                                                    <form x-show="showCancelForm" action="{{ route('orders.cancel', $order->id) }}" method="POST" class="mt-3 bg-rose-50/20 border border-rose-150 rounded-xl p-3.5 space-y-3">
+                                                        @csrf
+                                                        <div>
+                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Refund Account Details (US)</label>
+                                                            <textarea name="refund_account_details" rows="2" placeholder="If you already paid, provide your Zelle email/phone OR Bank Account & Routing Number for refund..." class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-gray-900 shadow-sm focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 transition"></textarea>
+                                                        </div>
+                                                        <div class="flex gap-2">
+                                                            <button type="submit" onclick="return confirm('Are you sure you want to cancel this order? This action cannot be undone.');" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition">Confirm Cancel</button>
+                                                            <button type="button" @click="showCancelForm = false" class="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs transition">Nevermind</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         @endif
 
                                         <!-- Return Order B2B Request Section -->
                                         @if($order->status === 'completed' && $order->return_status === null)
                                             <div class="mt-4 pt-3.5 border-t border-slate-150">
-                                                <div x-data="{ showReturnForm: false }">
+                                                <div x-data="{ showReturnForm: false, returnType: '' }">
                                                     <button type="button" @click.stop="showReturnForm = !showReturnForm" 
                                                             class="inline-flex items-center gap-1.5 bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 px-3.5 py-2 rounded-xl text-xs font-bold transition-all">
                                                         <i class="fa-solid fa-arrow-rotate-left"></i>
@@ -288,7 +299,7 @@
                                                         @csrf
                                                         <div>
                                                             <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Request Type <span class="text-red-500">*</span></label>
-                                                            <select name="return_type" required class="w-full border border-slate-200 focus:ring-1 focus:ring-red-500 focus:border-red-500 rounded-lg text-xs px-3 py-2 bg-white">
+                                                            <select name="return_type" x-model="returnType" required class="w-full border border-slate-200 focus:ring-1 focus:ring-red-500 focus:border-red-500 rounded-lg text-xs px-3 py-2 bg-white">
                                                                 <option value="">Select an option</option>
                                                                 <option value="return">Return for Refund</option>
                                                                 <option value="replace">Replace Product</option>
@@ -308,6 +319,10 @@
                                                         <div>
                                                             <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Comments / Details <span class="text-red-500">*</span></label>
                                                             <textarea name="return_comments" rows="2" required placeholder="Describe the issue, include damaged quantities or product names..." class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-gray-900 shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition"></textarea>
+                                                        </div>
+                                                        <div x-show="returnType === 'return'">
+                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Refund Account Details (US)</label>
+                                                            <textarea name="refund_account_details" rows="2" x-bind:required="returnType === 'return'" placeholder="Provide your Zelle email/phone OR Bank Name, Account Number, and Routing Number for refund..." class="w-full bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-gray-900 shadow-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500/20 transition"></textarea>
                                                         </div>
                                                         <div class="flex gap-2">
                                                             <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition">Submit Return Request</button>

@@ -78,7 +78,7 @@
 </header>
 
 <!-- ===================== MOBILE WELCOME HEADER ===================== -->
-<header class="pl-welcome-bar d-lg-none" style="background: #ffffff; border-bottom: 1px solid var(--pl-border); padding: 1rem 1rem;">
+<header class="pl-welcome-bar d-lg-none" style="background: #ffffff; border-bottom: 1px solid var(--pl-border); padding: 0.8rem 1rem; position: sticky; top: 0; z-index: 1020;">
   <div class="container-fluid d-flex align-items-center justify-content-between p-0">
     <a href="{{ route('home') }}" class="d-flex align-items-center gap-2 text-decoration-none">
       <img src="{{ asset('images/logo.jpeg') }}" alt="Pepperlemon logo" style="height: 38px; width: auto; border-radius: 6px; object-fit: contain;">
@@ -88,28 +88,8 @@
       </div>
     </a>
     <div class="d-flex align-items-center gap-3">
-      @auth
-        <a href="{{ route('dashboard') }}" class="position-relative" title="Account" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
-          <i class="bi bi-person-circle"></i>
-        </a>
-      @else
-        <a href="{{ route('login') }}" class="position-relative" title="Log In" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
-          <i class="bi bi-person"></i>
-        </a>
-      @endauth
-      <a href="{{ route('wishlist.index') }}" class="position-relative" title="Wishlist" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
-        <i class="bi bi-heart"></i>
-        <span class="position-absolute d-flex align-items-center justify-content-center" data-wishlist-badge
-              style="background: var(--pl-red); color: #fff; font-size: 0.6rem; font-weight: 800; border-radius: 50%; width: 15px; height: 15px; top: -5px; right: -7px; {{ session()->has('wishlist') && count(session('wishlist')) > 0 ? 'display:flex !important;' : 'display:none !important;' }}">
-          {{ session()->has('wishlist') ? count(session('wishlist')) : 0 }}
-        </span>
-      </a>
-      <a href="{{ route('cart.index') }}" class="position-relative" title="Cart" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
-        <i class="bi bi-bag"></i>
-        <span class="position-absolute d-flex align-items-center justify-content-center" data-cart-badge
-              style="background: var(--pl-red); color: #fff; font-size: 0.6rem; font-weight: 800; border-radius: 50%; width: 15px; height: 15px; top: -5px; right: -7px; {{ session()->has('cart') && array_sum(array_column(session('cart'), 'quantity')) > 0 ? 'display:flex !important;' : 'display:none !important;' }}">
-          {{ session()->has('cart') ? array_sum(array_column(session('cart'), 'quantity')) : 0 }}
-        </span>
+      <a href="{{ route('shop') }}" class="position-relative" title="Search" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
+        <i class="bi bi-search"></i>
       </a>
     </div>
   </div>

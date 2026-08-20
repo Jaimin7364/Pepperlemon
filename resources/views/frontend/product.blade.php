@@ -31,12 +31,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/style.css?v=2') }}">
 </head>
-<body class="pl-product-page-body">
+<body class="pl-product-page-body pl-hide-on-product">
 
 @include('frontend.partials.header')
 
 <!-- ===================== MOBILE PAGE HEADER ===================== -->
-<header class="pl-page-header d-lg-none">
+<header class="pl-page-header d-lg-none" style="position: sticky; top: 0; z-index: 1020; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
   <a href="{{ url('/shop') }}" class="pl-back-btn"><i class="bi bi-arrow-left"></i></a>
   <h1 id="mobile-product-title">{{ $product->name }}</h1>
   <div class="pl-header-icons">

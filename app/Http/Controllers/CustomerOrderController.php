@@ -47,6 +47,7 @@ class CustomerOrderController extends Controller
             'return_type'     => 'required|string|in:return,replace',
             'return_reason'   => 'required|string|max:255',
             'return_comments' => 'required|string|max:1000',
+            'refund_account_details' => 'nullable|string|max:1000',
         ]);
 
         $order->update([
@@ -54,6 +55,7 @@ class CustomerOrderController extends Controller
             'return_type'     => $request->return_type,
             'return_reason'   => $request->return_reason,
             'return_comments' => $request->return_comments,
+            'refund_account_details' => $request->return_type === 'return' ? $request->refund_account_details : null,
             'return_status'   => 'pending', // Pending admin approval
         ]);
 
@@ -73,6 +75,10 @@ class CustomerOrderController extends Controller
             return redirect()->back()->with('error', 'Only pending orders can be cancelled.');
         }
 
+        $request->validate([
+            'refund_account_details' => 'nullable|string|max:1000',
+        ]);
+
         // Restock products
         foreach ($order->items as $item) {
             if ($item->product) {
@@ -83,6 +89,7 @@ class CustomerOrderController extends Controller
         $order->update([
             'status' => 'cancelled',
             'notes' => $order->notes ? $order->notes . "\nCancelled by customer." : 'Cancelled by customer.',
+            'refund_account_details' => $request->refund_account_details,
         ]);
 
         return redirect()->back()->with('success', 'Your order has been cancelled successfully.');
