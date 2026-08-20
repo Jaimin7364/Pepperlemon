@@ -45,6 +45,7 @@
         <p class="mb-2"><a href="{{ route('shop') }}">Shop Catalog</a></p>
         <p class="mb-2"><a href="{{ route('cart.index') }}">Shopping Cart</a></p>
         <p class="mb-2"><a href="{{ route('wishlist.index') }}">My Wishlist</a></p>
+        <p class="mb-2"><a href="javascript:void(0)" onclick="if(window.triggerPwaInstall) window.triggerPwaInstall();" class="fw-bold" style="color:var(--pl-yellow) !important;">Download App</a></p>
       </div>
       <div class="col-6 col-lg-3">
         <h6 class="text-white mb-3">Company & Policies</h6>

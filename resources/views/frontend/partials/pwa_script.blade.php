@@ -59,6 +59,13 @@
                    window.matchMedia('(display-mode: minimal-ui)').matches;
         };
 
+        if (isInStandaloneMode()) {
+            const desktopBtn = document.getElementById('desktop-download-app-btn');
+            const mobileBtn = document.getElementById('mobile-download-app-btn');
+            if(desktopBtn) desktopBtn.style.display = 'none';
+            if(mobileBtn) mobileBtn.style.display = 'none';
+        }
+
         if (isIos() && !isInStandaloneMode()) {
             // Show iOS hint after 2 seconds if not dismissed previously
             if(!localStorage.getItem('iosInstallDismissed')) {
@@ -87,6 +94,13 @@
         window.addEventListener('appinstalled', () => {
             androidBanner.style.display = 'none';
             deferredPrompt = null;
+            
+            // Also hide header buttons
+            const desktopBtn = document.getElementById('desktop-download-app-btn');
+            const mobileBtn = document.getElementById('mobile-download-app-btn');
+            if(desktopBtn) desktopBtn.style.display = 'none';
+            if(mobileBtn) mobileBtn.style.display = 'none';
+            
             console.log('App successfully installed');
         });
 
@@ -106,5 +120,26 @@
             androidBanner.style.display = 'none';
             localStorage.setItem('androidInstallDismissed', 'true');
         });
+
+        // Global manual trigger
+        window.triggerPwaInstall = async () => {
+            if (isInStandaloneMode()) {
+                alert('App is already installed!');
+                return;
+            }
+            if (isIos()) {
+                iosBanner.style.display = 'block';
+            } else if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    console.log('User accepted the manual A2HS prompt');
+                }
+                deferredPrompt = null;
+                androidBanner.style.display = 'none';
+            } else {
+                alert('Please install from your browser menu by selecting "Add to Home Screen".');
+            }
+        };
     }
 </script>

@@ -63,6 +63,12 @@
         </span>
       </a>
 
+      <!-- Download App Button -->
+      <a href="javascript:void(0)" id="desktop-download-app-btn" onclick="if(window.triggerPwaInstall) window.triggerPwaInstall();" class="d-flex align-items-center gap-2 text-decoration-none bg-primary text-white px-3 py-2 rounded-pill" style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; box-shadow: 0 2px 8px rgba(14,107,87,0.2);">
+        <i class="bi bi-download" style="font-size: 1rem;"></i>
+        <span>App</span>
+      </a>
+
       <!-- Bag (Cart) Link -->
       <a href="{{ route('cart.index') }}" class="d-flex align-items-center gap-2 text-decoration-none position-relative" style="color: var(--pl-ink); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">
         <i class="bi bi-bag" style="font-size: 1.15rem; color: var(--pl-primary);"></i>
@@ -88,6 +94,9 @@
       </div>
     </a>
     <div class="d-flex align-items-center gap-3">
+      <a href="javascript:void(0)" id="mobile-download-app-btn" onclick="if(window.triggerPwaInstall) window.triggerPwaInstall();" class="position-relative" title="Download App" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
+        <i class="bi bi-download"></i>
+      </a>
       <a href="{{ route('shop') }}" class="position-relative" title="Search" style="color: var(--pl-primary-dark); font-size: 1.25rem; display: flex;">
         <i class="bi bi-search"></i>
       </a>
