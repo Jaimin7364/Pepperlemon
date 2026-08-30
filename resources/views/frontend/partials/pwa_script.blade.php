@@ -31,9 +31,23 @@
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js').then((registration) => {
                 console.log('SW registered: ', registration);
+                
+                // Check for service worker updates every hour
+                setInterval(() => {
+                    registration.update();
+                }, 60 * 60 * 1000);
             }).catch((registrationError) => {
                 console.log('SW registration failed: ', registrationError);
             });
+        });
+
+        // Automatically reload the page once if the service worker updates and takes control
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+                refreshing = true;
+                window.location.reload();
+            }
         });
     }
 
