@@ -40,9 +40,17 @@ class CategoryController extends Controller
             $imagePath = 'uploads/categories/' . $name;
         }
 
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Category::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
         Category::create([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $slug,
             'description' => $request->description,
             'image' => $imagePath,
             'is_active' => $request->has('is_active'),
@@ -76,9 +84,17 @@ class CategoryController extends Controller
             $imagePath = 'uploads/categories/' . $name;
         }
 
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Category::where('slug', $slug)->where('id', '!=', $category->id)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
         $category->update([
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $slug,
             'description' => $request->description,
             'image' => $imagePath,
             'is_active' => $request->has('is_active'),

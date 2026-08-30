@@ -166,6 +166,7 @@ class CheckoutAndProductTest extends TestCase
                 'shipping_state' => 'Uttar Pradesh',
                 'shipping_zip' => '221001',
                 'payment_method' => 'cod',
+                'delivery_type' => 'online_delivery',
             ]);
 
         $response->assertRedirect();

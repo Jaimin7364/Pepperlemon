@@ -74,10 +74,18 @@ class ProductController extends Controller
             $imagePaths[] = 'images/premium_dhoop_product.png';
         }
 
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
         Product::create([
             'category_id' => $request->category_id,
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $slug,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
             'sku' => $request->sku ?: 'VB-' . strtoupper(Str::random(6)),
@@ -164,10 +172,18 @@ class ProductController extends Controller
             $existingImages[] = 'images/premium_dhoop_product.png';
         }
 
+        $slug = Str::slug($request->name);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
+        }
+
         $product->update([
             'category_id' => $request->category_id,
             'name' => $request->name,
-            'slug' => Str::slug($request->name),
+            'slug' => $slug,
             'price' => $request->price,
             'sale_price' => $request->sale_price,
             'sku' => $request->sku ?: $product->sku,
