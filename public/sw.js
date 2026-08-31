@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pepperlemon-v2';
+const CACHE_NAME = 'pepperlemon-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.json',
@@ -70,44 +70,22 @@ self.addEventListener('fetch', (event) => {
     return; // Let the browser handle these normally (network only)
   }
 
-  // Network-First strategy for HTML navigation requests (HTML pages)
-  if (event.request.mode === 'navigate' || (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html'))) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          // If valid response, update the cache and return
-          if (response && response.status === 200) {
-            const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(event.request, responseClone);
-            });
-          }
-          return response;
-        })
-        .catch(() => {
-          // Fallback to cache if offline
-          return caches.match(event.request);
-        })
-    );
-    return;
-  }
-
-  // Stale-While-Revalidate strategy for static assets (images, CSS, JS, fonts)
+  // Use Network-First strategy for EVERYTHING to ensure fresh content is always shown when online
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      const fetchPromise = fetch(event.request).then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          const responseClone = networkResponse.clone();
+    fetch(event.request)
+      .then((response) => {
+        // If valid response, update the cache and return
+        if (response && response.status === 200 && response.type === 'basic') {
+          const responseClone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, responseClone);
           });
         }
-        return networkResponse;
-      }).catch(() => {
-        // Ignore network errors for static files if they fail (e.g. offline)
-      });
-
-      return cachedResponse || fetchPromise;
-    })
+        return response;
+      })
+      .catch(() => {
+        // Fallback to cache if offline
+        return caches.match(event.request);
+      })
   );
 });
