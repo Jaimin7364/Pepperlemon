@@ -35,3 +35,6 @@ Thumbs.db
 Homestead.json
 Homestead.yaml
 auth.json
+
+# User Uploads
+/public/uploads/
