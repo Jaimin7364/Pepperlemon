@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pepperlemon-v3';
+const CACHE_NAME = 'pepperlemon-v4';
 const ASSETS_TO_CACHE = [
   '/',
   '/manifest.json',
@@ -70,22 +70,45 @@ self.addEventListener('fetch', (event) => {
     return; // Let the browser handle these normally (network only)
   }
 
-  // Use Network-First strategy for EVERYTHING to ensure fresh content is always shown when online
+  // If the request is for an HTML page or API/XHR request, use Network-First
+  const isHtml = event.request.mode === 'navigate' || (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html'));
+  const isApi = event.request.headers.get('x-requested-with') === 'XMLHttpRequest' || url.pathname.startsWith('/api/');
+
+  if (isHtml || isApi) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response && response.status === 200 && response.type === 'basic') {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // For everything else (images, CSS, JS, fonts), use Stale-While-Revalidate for maximum performance
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // If valid response, update the cache and return
-        if (response && response.status === 200 && response.type === 'basic') {
-          const responseClone = response.clone();
+    caches.match(event.request).then((cachedResponse) => {
+      const fetchPromise = fetch(event.request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, responseClone);
           });
         }
-        return response;
-      })
-      .catch(() => {
-        // Fallback to cache if offline
-        return caches.match(event.request);
-      })
+        return networkResponse;
+      }).catch(() => {
+        // Ignore network errors for static files if offline
+      });
+
+      return cachedResponse || fetchPromise;
+    })
   );
 });
