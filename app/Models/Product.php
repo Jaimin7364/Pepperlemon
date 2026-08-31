@@ -27,7 +27,11 @@ class Product extends Model
             return $firstImg;
         }
         $normalizedPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $firstImg);
-        if (file_exists(public_path($normalizedPath)) || str_starts_with($firstImg, 'uploads/')) {
+        // If it's an uploaded file OR starts with 'images/', assume it's valid to prevent fallback loops
+        if (str_starts_with($firstImg, 'uploads/') || str_starts_with($firstImg, 'images/')) {
+            return asset($firstImg);
+        }
+        if (file_exists(public_path($normalizedPath))) {
             return asset($firstImg);
         }
         return asset('images/placeholder.svg');
@@ -46,7 +50,9 @@ class Product extends Model
                 $urls[] = $img;
             } else {
                 $normalizedPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $img);
-                if (file_exists(public_path($normalizedPath)) || str_starts_with($img, 'uploads/')) {
+                if (str_starts_with($img, 'uploads/') || str_starts_with($img, 'images/')) {
+                    $urls[] = asset($img);
+                } elseif (file_exists(public_path($normalizedPath))) {
                     $urls[] = asset($img);
                 } else {
                     $urls[] = asset('images/placeholder.svg');

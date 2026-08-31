@@ -1,41 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Shop Online - Pepperlemon Premium Grocery & Beverage Store</title>
-<meta name="description" content="Shop the finest selection of beverages, Mexican foods, organic snacks, candies, and daily grocery items at Pepperlemon. Fast shipping & best deals.">
-<meta name="keywords" content="buy beverages online, snacks shop, premium groceries online, organic snacks, Pepperlemon shop">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="{{ url('/shop') }}">
+@extends('layouts.frontend')
 
-<!-- PWA Meta Tags -->
-@include('frontend.partials.pwa_head')
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ url('/shop') }}">
-<meta property="og:title" content="Shop Online - Pepperlemon Premium Grocery & Beverage Store">
-<meta property="og:description" content="Shop the finest selection of beverages, Mexican foods, organic snacks, candies, and daily grocery items at Pepperlemon. Fast shipping & best deals.">
-<meta property="og:image" content="{{ asset('images/logo.jpeg') }}">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="{{ url('/shop') }}">
-<meta name="twitter:title" content="Shop Online - Pepperlemon Premium Grocery & Beverage Store">
-<meta name="twitter:description" content="Shop the finest selection of beverages, Mexican foods, organic snacks, candies, and daily grocery items at Pepperlemon. Fast shipping & best deals.">
-<meta name="twitter:image" content="{{ asset('images/logo.jpeg') }}">
-<link rel="icon" href="{{ asset('images/logo.jpeg') }}">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/style.css?v=2') }}">
-</head>
-<body>
-
-@include('frontend.partials.header')
-
+@section('content')
 <!-- ===================== MOBILE PAGE HEADER ===================== -->
 <header class="pl-page-header d-lg-none flex-column gap-2 align-items-stretch">
   <div class="d-flex align-items-center justify-content-between">
@@ -171,9 +136,6 @@
   </div>
 </main>
 
-@include('frontend.partials.footer')
-@include('frontend.partials.bottom_nav')
-
 <!-- ===================== MOBILE FILTER DRAWER ===================== -->
 <div class="pl-filter-drawer" id="mobileFilterDrawer">
   <div class="pl-drawer-overlay" id="mobileDrawerOverlay"></div>
@@ -220,13 +182,15 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  window.pl_csrf = '{{ csrf_token() }}';
-  window.pl_total_products = {{ $products->total() }};
-</script>
-<script src="{{ asset('js/script.js?v=2') }}"></script>
 
+
+
+
+
+
+@endsection
+
+@push('scripts')
 <script>
   document.addEventListener("DOMContentLoaded", () => {
       let loading = false;
@@ -305,11 +269,7 @@
       }
   });
 </script>
+@endpush
 
-<!-- PWA Installation Banners and Scripts -->
-@include('frontend.partials.pwa_script')
-
-</body>
-</html>
 
 

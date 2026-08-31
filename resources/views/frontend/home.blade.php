@@ -1,42 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pepperlemon - Premium Online Grocery & Beverage Shop</title>
-<meta name="description" content="Welcome to Pepperlemon, your premier destination for farm fresh groceries, premium beverages, candies, and gourmet snacks. Enjoy fast shipping and secure payments.">
-<meta name="keywords" content="pepperlemon, online grocery store, buy beverages online, organic food delivery, candies, snacks shop">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="{{ url('/') }}">
+@extends('layouts.frontend')
 
-<!-- PWA Meta Tags -->
-@include('frontend.partials.pwa_head')
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ url('/') }}">
-<meta property="og:title" content="Pepperlemon - Premium Online Grocery & Beverage Shop">
-<meta property="og:description" content="Welcome to Pepperlemon, your premier destination for farm fresh groceries, premium beverages, candies, and gourmet snacks. Enjoy fast shipping and secure payments.">
-<meta property="og:image" content="{{ asset('images/logo.jpeg') }}">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="{{ url('/') }}">
-<meta name="twitter:title" content="Pepperlemon - Premium Online Grocery & Beverage Shop">
-<meta name="twitter:description" content="Welcome to Pepperlemon, your premier destination for farm fresh groceries, premium beverages, candies, and gourmet snacks. Enjoy fast shipping and secure payments.">
-<meta name="twitter:image" content="{{ asset('images/logo.jpeg') }}">
-<link rel="icon" href="{{ asset('images/logo.jpeg') }}">
-
-<!-- Bootstrap -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/style.css?v=6') }}">
-</head>
-<body>
-
-@include('frontend.partials.header')
-
+@section('content')
 <main class="container pl-section">
 
   <!-- ===================== HERO BANNER SECTION ===================== -->
@@ -346,16 +310,15 @@
 </main>
 
 <!-- ===================== FOOTER (DESKTOP) ===================== -->
-@include('frontend.partials.footer')
-@include('frontend.partials.bottom_nav')
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  window.pl_csrf = '{{ csrf_token() }}';
-</script>
-<script src="{{ asset('js/script.js?v=3') }}"></script>
 
+
+
+
+@endsection
+
+@push('scripts')
 <script>
   // ===== HOME PAGE INFINITE SCROLL =====
   document.addEventListener('DOMContentLoaded', () => {
@@ -432,9 +395,5 @@
     }
   });
 </script>
+@endpush
 
-<!-- PWA Installation Banners and Scripts -->
-@include('frontend.partials.pwa_script')
-
-</body>
-</html>

@@ -1,43 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>{{ $product->name }} | Pepperlemon</title>
-<meta name="description" content="{{ $product->short_description ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 150) }}">
-<meta name="keywords" content="{{ $product->category->name ?? 'grocery' }}, {{ $product->name }}, buy {{ $product->name }} online, Pepperlemon">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="{{ route('product.show', $product->slug) }}">
+@extends('layouts.frontend')
 
-<!-- PWA Meta Tags -->
-@include('frontend.partials.pwa_head')
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="product">
-<meta property="og:url" content="{{ route('product.show', $product->slug) }}">
-<meta property="og:title" content="{{ $product->name }} | Pepperlemon">
-<meta property="og:description" content="{{ $product->short_description ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 150) }}">
-<meta property="og:image" content="{{ $product->primary_image_url }}">
-<meta property="product:price:amount" content="{{ $product->sale_price ?? $product->price }}">
-<meta property="product:price:currency" content="USD">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="{{ route('product.show', $product->slug) }}">
-<meta name="twitter:title" content="{{ $product->name }} | Pepperlemon">
-<meta name="twitter:description" content="{{ $product->short_description ?? \Illuminate\Support\Str::limit(strip_tags($product->description), 150) }}">
-<meta name="twitter:image" content="{{ $product->primary_image_url }}">
-<link rel="icon" href="{{ asset('images/logo.jpeg') }}">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/style.css?v=2') }}">
-</head>
-<body class="pl-product-page-body pl-hide-on-product">
-
-@include('frontend.partials.header')
-
+@section('content')
 <!-- ===================== MOBILE PAGE HEADER ===================== -->
 <header class="pl-page-header d-lg-none" style="position: sticky; top: 0; z-index: 1020; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
   <a href="{{ url('/shop') }}" class="pl-back-btn"><i class="bi bi-arrow-left"></i></a>
@@ -291,9 +254,6 @@
 
 </main>
 
-@include('frontend.partials.footer')
-@include('frontend.partials.bottom_nav')
-
 <!-- Mobile Sticky Add-to-Cart Bar -->
 <div class="pl-mobile-sticky-bar d-lg-none" id="plMobileStickyBar">
   <div class="d-flex align-items-center justify-content-between mb-2">
@@ -330,11 +290,15 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-  window.pl_csrf = '{{ csrf_token() }}';
-</script>
-<script src="{{ asset('js/script.js?v=10') }}"></script>
+
+
+
+
+
+
+@endsection
+
+@push('scripts')
 <script>
   // Sync both steppers together
   document.addEventListener('DOMContentLoaded', function() {
@@ -375,11 +339,7 @@
     }
   });
 </script>
+@endpush
 
-<!-- PWA Installation Banners and Scripts -->
-@include('frontend.partials.pwa_script')
-
-</body>
-</html>
 
 

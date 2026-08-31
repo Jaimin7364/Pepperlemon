@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- PWA Meta Tags -->
-    @include('frontend.partials.pwa_head')
+
 
     <title>@yield('meta_title', 'Pepperlemon - Premium Online Grocery & Beverage Shop')</title>
     <meta name="description" content="@yield('meta_description', 'Discover premium organic groceries, beverages, candies, and gourmet snacks at Pepperlemon. Enjoy fast express delivery and secure online checkout.')">
@@ -194,6 +194,6 @@
     @stack('scripts')
     
     <!-- PWA Installation Banners and Scripts -->
-    @include('frontend.partials.pwa_script')
+
 </body>
 </html>
