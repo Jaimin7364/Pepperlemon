@@ -71,7 +71,7 @@ class ProductController extends Controller
         }
 
         if (empty($imagePaths)) {
-            $imagePaths[] = 'images/premium_dhoop_product.png';
+            $imagePaths[] = 'images/placeholder.svg';
         }
 
         $slug = Str::slug($request->name);
@@ -169,7 +169,7 @@ class ProductController extends Controller
 
         // If all images removed, add the default fallback
         if (empty($existingImages)) {
-            $existingImages[] = 'images/premium_dhoop_product.png';
+            $existingImages[] = 'images/placeholder.svg';
         }
 
         $slug = Str::slug($request->name);

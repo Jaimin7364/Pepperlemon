@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <rect width="400" height="400" fill="#f8fafc"/>
+  <rect x="20" y="20" width="360" height="360" rx="12" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="8 6"/>
+  <g transform="translate(136, 110)">
+    <!-- Image/Camera Placeholder Icon -->
+    <rect x="0" y="20" width="128" height="96" rx="16" fill="#e2e8f0"/>
+    <circle cx="64" cy="68" r="24" fill="#cbd5e1"/>
+    <circle cx="64" cy="68" r="12" fill="#e2e8f0"/>
+    <path d="M 36 20 L 48 0 L 80 0 L 92 20 Z" fill="#cbd5e1"/>
+    <circle cx="104" cy="40" r="6" fill="#94a3b8"/>
+  </g>
+  <text x="200" y="270" font-family="'Inter', -apple-system, sans-serif" font-size="18" font-weight="600" fill="#64748b" text-anchor="middle">No Image Available</text>
+  <text x="200" y="295" font-family="'Inter', -apple-system, sans-serif" font-size="13" font-weight="500" fill="#94a3b8" text-anchor="middle">Pepperlemon Grocery</text>
+</svg>

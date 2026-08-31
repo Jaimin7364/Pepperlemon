@@ -20,13 +20,17 @@ class Product extends Model
             $images = !empty($this->images) ? [$this->images] : [];
         }
         $firstImg = count($images) > 0 ? $images[0] : null;
-        if ($firstImg && (str_starts_with($firstImg, 'http://') || str_starts_with($firstImg, 'https://'))) {
+        if (!$firstImg) {
+            return asset('images/placeholder.svg');
+        }
+        if (str_starts_with($firstImg, 'http://') || str_starts_with($firstImg, 'https://')) {
             return $firstImg;
         }
-        if ($firstImg && file_exists(public_path($firstImg))) {
+        $normalizedPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $firstImg);
+        if (file_exists(public_path($normalizedPath)) || str_starts_with($firstImg, 'uploads/')) {
             return asset($firstImg);
         }
-        return asset('images/logo.jpeg');
+        return asset('images/placeholder.svg');
     }
 
     public function getAllImageUrlsAttribute(): array
@@ -40,12 +44,15 @@ class Product extends Model
             if (empty($img)) continue;
             if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) {
                 $urls[] = $img;
-            } elseif (file_exists(public_path($img))) {
-                $urls[] = asset($img);
             } else {
-                $urls[] = asset('images/logo.jpeg');
+                $normalizedPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $img);
+                if (file_exists(public_path($normalizedPath)) || str_starts_with($img, 'uploads/')) {
+                    $urls[] = asset($img);
+                } else {
+                    $urls[] = asset('images/placeholder.svg');
+                }
             }
         }
-        return count($urls) > 0 ? $urls : [asset('images/logo.jpeg')];
+        return count($urls) > 0 ? $urls : [asset('images/placeholder.svg')];
     }
 }

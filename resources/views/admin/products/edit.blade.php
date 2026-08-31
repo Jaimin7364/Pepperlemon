@@ -1,4 +1,4 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('header_title', 'Edit Product')
 
@@ -132,12 +132,13 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
                     @foreach($currentImages as $index => $img)
                         @php
+                            $normalizedImgPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $img);
                             if (!empty($img) && (str_starts_with($img, 'http://') || str_starts_with($img, 'https://'))) {
                                 $imgSrc = $img;
-                            } elseif (!empty($img) && file_exists(public_path($img))) {
+                            } elseif (!empty($img) && (file_exists(public_path($normalizedImgPath)) || str_starts_with($img, 'uploads/'))) {
                                 $imgSrc = asset($img);
                             } else {
-                                $imgSrc = asset('images/logo.jpeg');
+                                $imgSrc = asset('images/placeholder.svg');
                             }
                         @endphp
                         <div class="relative bg-white border border-slate-200 rounded-xl p-2.5 flex flex-col items-center justify-center shadow-xs current-img-card transition-all duration-300">
